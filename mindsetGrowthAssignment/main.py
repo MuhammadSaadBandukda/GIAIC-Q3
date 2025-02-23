@@ -8,7 +8,7 @@ st.set_page_config(page_title="Data Sweeper", layout="wide")
 st.title("Data Sweeper ")
 st.write("Transform your files between CSV and excel with dta cleaninng and Visualization")
 
-uploadedFiles = st.file_uploader("upload your files (CSV or excel)", type=["xlsx",'csv'], accept_multiple_files=True)
+uploadedFiles = st.file_uploader("upload your files (CSV or Excel)", type=["xlsx",'csv'], accept_multiple_files=True)
 
 
 #ye kam thora smjh nhi aya niche wala
@@ -33,23 +33,32 @@ if uploadedFiles:
 
         # preview data
         st.write("preview the head of the Data Frame")
-        st.dataframe(data_frame.head())  #data_frame.head returns first 5 rows of data
+        st.dataframe(data_frame)  #data_frame.head returns first 5 rows of data
 
         st.subheader("Data cleaning Options")
-        if st.checkbox(f"Cleaning Data for {file.name}"):
-            col1,col2 = st.columns(2)
+        if st.expander(f"Cleaning Data for {file.name}",expanded=True):
+            with st.form("Data_Cleaning_Form"):
+                col1, col2 = st.columns(2)  # Columns should be inside the form
+                
+                with col1:
+                    checkbox1 = st.checkbox(f"Remove Duplicates from {file.name}")
 
-            with col1:
-                if st.button(f"Remove Duplicates from {file.name}"):
-                    data_frame.drop_duplicates(inplace=True)
-                    st.write("Duplicates Removed!")
+                with col2:
+                    checkbox2 = st.checkbox(f"Fill Missing Values for {file.name}")
 
-            with col2:
-                    if st.button(f"Fill Missing Values for {file.name}"): # on;y work for numeric coloumn
+                if st.form_submit_button("Click to Proceed"):
+                    if checkbox1:
+                        data_frame.drop_duplicates(inplace=True)
+                        st.success("✅ Duplicates Removed!")
+
+                    if checkbox2:
                         numeric_cols = data_frame.select_dtypes(include=['number']).columns
                         data_frame[numeric_cols] = data_frame[numeric_cols].fillna(data_frame[numeric_cols].mean())
-                        st.write('Missing Values Filled!')
+                        st.success("✅ Missing Values Filled!")
 
+
+                    st.write("### Preview of Cleaned Data")
+                    st.dataframe(data_frame)                
 
         #choose individual columns
 
@@ -62,13 +71,15 @@ if uploadedFiles:
         st.subheader("Data Visualization")
 
         if st.checkbox(f"Show Visualization for {file.name}"):
-            st.bar_chart(data_frame.select_dtypes(include="number").iloc[:,:2])
+            st.area_chart(data_frame.select_dtypes(include="number").iloc[:,:2])
 
 
         #file conversion CSV --> xlxs
         st.subheader("Conversion Options")
 
         conversionType = st.radio(f"Convert {file.name} to:",["Excel","CSV"],key=file.name)
+        #bool isDone = False
+
         if st.button(f"Convert {file.name}"):
             buffer = BytesIO()
             if conversionType == "Excel":
@@ -90,4 +101,6 @@ if uploadedFiles:
             )
 
 
-st.success("All files done")
+    st.success("All files done")
+else:
+    st.warning("Please Upload")
