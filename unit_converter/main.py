@@ -2,7 +2,6 @@ import streamlit as st
 st.set_page_config(page_title="Unit Converter", layout="wide")
 st.title("Unit converter")
 
-
 def length_unit_converter():
     def lengthLogic():
         st.write('w8 converting')
@@ -32,7 +31,6 @@ def temperature_unit_converter():
 
 
 
-# st.markdown("# Hello from unit-converter!")
 col1,col2,col3,col4,col5,col6 = st.columns([1,1,1,1.1,1,1])
 with col1:
     length = st.checkbox("length")
