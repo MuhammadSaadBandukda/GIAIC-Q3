@@ -1,0 +1,10 @@
+The Great Gatsby|F. Scott Fitzgerald|1925|Fiction|True
+Ego is the Enemy|Ryan Holiday|2016|Self-help|False
+1984|George Orwell|1949|Dystopian|True
+Atomic Habits|James Clear|2018|Self-help|True
+To Kill a Mockingbird|Harper Lee|1960|Fiction|False
+The Alchemist|Paulo Coelho|1988|Philosophical|True
+Deep Work|Cal Newport|2016|Productivity|True
+The Silent Patient|Alex Michaelides|2019|Psychological Thriller|False
+Sapiens|Yuval Noah Harari|2011|History|True
+Man's Search for Meaning|Viktor E. Frankl|1946|Psychology|True
